@@ -1,10 +1,7 @@
 <div align="center">
     <h2>Leantime Gantt (based on <a href="frappe/gantt">frappe/gantt</a>) </h2>
     <p align="center">
-        <p>A simple, interactive, modern gantt chart library for the web. *This is a fork of </p>
-        <a href="https://frappe.github.io/gantt">
-            <b>View the demo »</b>
-        </a>
+    <p>A simple, interactive, modern gantt chart library for the web. </p>
     </p>
 </div>
 
