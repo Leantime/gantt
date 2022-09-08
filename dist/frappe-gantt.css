@@ -31,6 +31,9 @@
   stroke: #666;
   stroke-width: 1.4;
 }
+.gantt .arrow .hover {
+  stroke-width: 4;
+}
 .gantt .bar {
   fill: #b8c2cc;
   stroke: #8D99A6;
@@ -82,6 +85,9 @@
   visibility: visible;
   opacity: 1;
 }
+.gantt .bar-wrapper.addArrow .bar {
+  stroke-width: 4px;
+}
 .gantt .bar-wrapper.active .bar {
   fill: #a9b5c1;
 }
@@ -123,6 +129,16 @@
 .gantt-container .popup-wrapper .subtitle {
   padding: 10px;
   color: #dfe2e5;
+}
+.gantt-container .popup-wrapper .action {
+  color: #dfe2e5;
+  border-top: 3px solid #a3a3ff;
+  padding: 10px;
+  background: rgba(163, 163, 255, 0.6);
+  cursor: pointer;
+}
+.gantt-container .popup-wrapper .action:hover {
+  background: rgba(163, 163, 255, 0.8);
 }
 .gantt-container .popup-wrapper .pointer {
   position: absolute;
