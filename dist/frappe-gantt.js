@@ -9,94 +9,122 @@ var Gantt = (function () {
     const SECOND = 'second';
     const MILLISECOND = 'millisecond';
 
-const month_names = {
-    en: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'
-    ],
-    es: [
-        'Enero',
-        'Febrero',
-        'Marzo',
-        'Abril',
-        'Mayo',
-        'Junio',
-        'Julio',
-        'Agosto',
-        'Septiembre',
-        'Octubre',
-        'Noviembre',
-        'Diciembre'
-    ],
-    ru: [
-        'Январь',
-        'Февраль',
-        'Март',
-        'Апрель',
-        'Май',
-        'Июнь',
-        'Июль',
-        'Август',
-        'Сентябрь',
-        'Октябрь',
-        'Ноябрь',
-        'Декабрь'
-    ],
-    ptBr: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro'
+    const month_names = {
+        en: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ],
+        es: [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre',
+        ],
+        ru: [
+            'Январь',
+            'Февраль',
+            'Март',
+            'Апрель',
+            'Май',
+            'Июнь',
+            'Июль',
+            'Август',
+            'Сентябрь',
+            'Октябрь',
+            'Ноябрь',
+            'Декабрь',
+        ],
+        ptBr: [
+            'Janeiro',
+            'Fevereiro',
+            'Março',
+            'Abril',
+            'Maio',
+            'Junho',
+            'Julho',
+            'Agosto',
+            'Setembro',
+            'Outubro',
+            'Novembro',
+            'Dezembro'
 
-    ],
+        ],
 
-    de: [
-		'Januar',
-        'Februar',
-        'März',
-        'April',
-        'Mai',
-        'Juni',
-        'Juli',
-        'August',
-        'September',
-        'Oktober',
-        'November',
-        'Dezember'
-    ],
-    fr: [
-        'Janvier',
-        'Février',
-        'Mars',
-        'Avril',
-        'Mai',
-        'Juin',
-        'Juillet',
-        'Août',
-        'Septembre',
-        'Octobre',
-        'Novembre',
-        'Décembre'
-    ]
-};
+        de: [
+    		'Januar',
+            'Februar',
+            'März',
+            'April',
+            'Mai',
+            'Juni',
+            'Juli',
+            'August',
+            'September',
+            'Oktober',
+            'November',
+            'Dezember'
+        ],
+        fr: [
+            'Janvier',
+            'Février',
+            'Mars',
+            'Avril',
+            'Mai',
+            'Juin',
+            'Juillet',
+            'Août',
+            'Septembre',
+            'Octobre',
+            'Novembre',
+            'Décembre',
+        ],
+        tr: [
+            'Ocak',
+            'Şubat',
+            'Mart',
+            'Nisan',
+            'Mayıs',
+            'Haziran',
+            'Temmuz',
+            'Ağustos',
+            'Eylül',
+            'Ekim',
+            'Kasım',
+            'Aralık',
+        ],
+        zh: [
+            '一月',
+            '二月',
+            '三月',
+            '四月',
+            '五月',
+            '六月',
+            '七月',
+            '八月',
+            '九月',
+            '十月',
+            '十一月',
+            '十二月',
+        ],
+    };
 
     var date_utils = {
         parse(date, date_separator = '-', time_separator = /[.:]/) {
@@ -151,25 +179,25 @@ const month_names = {
             return date_string + (with_time ? ' ' + time_string : '');
         },
 
-    format(date, format_string = 'YYYY-MM-DD HH:mm:ss.SSS', lang) {
-    	//  add localization to format Date
-    	var localMonthNames = month_names[lang];
-    	if(localMonthNames == null)
-    		localMonthNames = month_names['en'];
+        format(date, format_string = 'YYYY-MM-DD HH:mm:ss.SSS', lang) {
+        	//  add localization to format Date
+        	var localMonthNames = month_names[lang];
+        	if(localMonthNames == null)
+        		localMonthNames = month_names['en'];
 
-        const values = this.get_date_values(date).map(d => padStart(d, 2, 0));
-        const format_map = {
-            YYYY: values[0],
-            MM: padStart(+values[1] + 1, 2, 0),
-            DD: values[2],
-            HH: values[3],
-            mm: values[4],
-            ss: values[5],
-            SSS: values[6],
-            D: values[2],
-            MMMM: localMonthNames[+values[1]],
-            MMM: localMonthNames[+values[1]]
-        };
+            const values = this.get_date_values(date).map(d => padStart(d, 2, 0));
+            const format_map = {
+                YYYY: values[0],
+                MM: padStart(+values[1] + 1, 2, 0),
+                DD: values[2],
+                HH: values[3],
+                mm: values[4],
+                ss: values[5],
+                SSS: values[6],
+                D: values[2],
+                MMMM: localMonthNames[+values[1]],
+                MMM: localMonthNames[+values[1]]
+            };
 
             let str = format_string;
             const formatted_values = [];
@@ -320,11 +348,11 @@ const month_names = {
         }
     }
 
-function $$1(expr, con) {
-    return typeof expr === 'string'
-        ? (con || document).querySelector(expr)
-        : expr || null;
-}
+    function $$1(expr, con) {
+        return typeof expr === 'string'
+            ? (con || document).querySelector(expr)
+            : expr || null;
+    }
 
     function createSVG(tag, attrs) {
         const elem = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -354,25 +382,25 @@ function $$1(expr, con) {
         }
     }
 
-function getAnimationElement(
-    svgElement,
-    attr,
-    from,
-    to,
-    dur = '0.4s',
-    begin = '0.1s'
-) {
-    const animEl = svgElement.querySelector('animate');
-    if (animEl) {
-        $$1.attr(animEl, {
-            attributeName: attr,
-            from,
-            to,
-            dur,
-            begin: 'click + ' + begin // artificial click
-        });
-        return svgElement;
-    }
+    function getAnimationElement(
+        svgElement,
+        attr,
+        from,
+        to,
+        dur = '0.4s',
+        begin = '0.1s'
+    ) {
+        const animEl = svgElement.querySelector('animate');
+        if (animEl) {
+            $$1.attr(animEl, {
+                attributeName: attr,
+                from,
+                to,
+                dur,
+                begin: 'click + ' + begin, // artificial click
+            });
+            return svgElement;
+        }
 
         const animateElement = createSVG('animate', {
             attributeName: attr,
@@ -400,56 +428,56 @@ function getAnimationElement(
         }[name];
     }
 
-$$1.on = (element, event, selector, callback) => {
-    if (!callback) {
-        callback = selector;
-        $$1.bind(element, event, callback);
-    } else {
-        $$1.delegate(element, event, selector, callback);
-    }
-};
-
-$$1.off = (element, event, handler) => {
-    element.removeEventListener(event, handler);
-};
-
-$$1.bind = (element, event, callback) => {
-    event.split(/\s+/).forEach(function(event) {
-        element.addEventListener(event, callback);
-    });
-};
-
-$$1.delegate = (element, event, selector, callback) => {
-    element.addEventListener(event, function(e) {
-        const delegatedTarget = e.target.closest(selector);
-        if (delegatedTarget) {
-            e.delegatedTarget = delegatedTarget;
-            callback.call(this, e, delegatedTarget);
+    $$1.on = (element, event, selector, callback) => {
+        if (!callback) {
+            callback = selector;
+            $$1.bind(element, event, callback);
+        } else {
+            $$1.delegate(element, event, selector, callback);
         }
-    });
-};
+    };
 
-$$1.closest = (selector, element) => {
-    if (!element) return null;
+    $$1.off = (element, event, handler) => {
+        element.removeEventListener(event, handler);
+    };
+
+    $$1.bind = (element, event, callback) => {
+        event.split(/\s+/).forEach(function (event) {
+            element.addEventListener(event, callback);
+        });
+    };
+
+    $$1.delegate = (element, event, selector, callback) => {
+        element.addEventListener(event, function (e) {
+            const delegatedTarget = e.target.closest(selector);
+            if (delegatedTarget) {
+                e.delegatedTarget = delegatedTarget;
+                callback.call(this, e, delegatedTarget);
+            }
+        });
+    };
+
+    $$1.closest = (selector, element) => {
+        if (!element) return null;
 
         if (element.matches(selector)) {
             return element;
         }
 
-    return $$1.closest(selector, element.parentNode);
-};
+        return $$1.closest(selector, element.parentNode);
+    };
 
-$$1.attr = (element, attr, value) => {
-    if (!value && typeof attr === 'string') {
-        return element.getAttribute(attr);
-    }
-
-    if (typeof attr === 'object') {
-        for (let key in attr) {
-            $$1.attr(element, key, attr[key]);
+    $$1.attr = (element, attr, value) => {
+        if (!value && typeof attr === 'string') {
+            return element.getAttribute(attr);
         }
-        return;
-    }
+
+        if (typeof attr === 'object') {
+            for (let key in attr) {
+                $$1.attr(element, key, attr[key]);
+            }
+            return;
+        }
 
         element.setAttribute(attr, value);
     };
@@ -576,43 +604,43 @@ $$1.attr = (element, attr, value) => {
         draw_resize_handles() {
             if (this.invalid) return;
 
-        const bar = this.$bar;
-        const handle_width = 8;
+            const bar = this.$bar;
+            const handle_width = 8;
 
-        //  make changing todos optional
-        if(this.gantt.options.enable_slide_edit){
-        	createSVG('rect', {
-        		x: bar.getX() + bar.getWidth() - 9,
-        		y: bar.getY() + 1,
-        		width: handle_width,
-        		height: this.height - 2,
-        		rx: this.corner_radius,
-        		ry: this.corner_radius,
-        		class: 'handle right',
-        		append_to: this.handle_group
-        	});
+            //  make changing todos optional
+            if(this.gantt.options.enable_slide_edit){
+            	createSVG('rect', {
+            		x: bar.getX() + bar.getWidth() - 9,
+            		y: bar.getY() + 1,
+            		width: handle_width,
+            		height: this.height - 2,
+            		rx: this.corner_radius,
+            		ry: this.corner_radius,
+            		class: 'handle right',
+            		append_to: this.handle_group
+            	});
 
-        	createSVG('rect', {
-        		x: bar.getX() + 1,
-        		y: bar.getY() + 1,
-        		width: handle_width,
-        		height: this.height - 2,
-        		rx: this.corner_radius,
-        		ry: this.corner_radius,
-        		class: 'handle left',
-        		append_to: this.handle_group
-        	});
+            	createSVG('rect', {
+            		x: bar.getX() + 1,
+            		y: bar.getY() + 1,
+            		width: handle_width,
+            		height: this.height - 2,
+            		rx: this.corner_radius,
+            		ry: this.corner_radius,
+            		class: 'handle left',
+            		append_to: this.handle_group
+            	});
+            }
+
+            //  make changing progress optional
+            if ((this.task.progress && this.task.progress < 100) && this.gantt.options.enable_progress_edit) {
+            	this.$handle_progress = createSVG('polygon', {
+            		points: this.get_progress_polygon_points().join(','),
+            		class: 'handle progress',
+            		append_to: this.handle_group
+            	});
+            }
         }
-
-        //  make changing progress optional
-        if ((this.task.progress && this.task.progress < 100) && this.gantt.options.enable_progress_edit) {
-        	this.$handle_progress = createSVG('polygon', {
-        		points: this.get_progress_polygon_points().join(','),
-        		class: 'handle progress',
-        		append_to: this.handle_group
-        	});
-        }
-    }
 
         get_progress_polygon_points() {
             const bar_progress = this.$bar_progress;
@@ -631,85 +659,96 @@ $$1.attr = (element, attr, value) => {
             this.setup_click_event();
         }
 
-    setup_click_event() {
-        $$1.on(this.group, 'focus ' + this.gantt.options.popup_trigger, e => {
-            if (this.action_completed) {
-                // just finished a move action, wait for a few seconds
-                return;
-            }
+        setup_click_event() {
+            $$1.on(this.group, 'focus ' + this.gantt.options.popup_trigger, (e) => {
+                if (this.action_completed) {
+                    // just finished a move action, wait for a few seconds
+                    return;
+                }
 
-            if (e.type === 'click') {
+                if (e.type === 'click') {
+                    this.gantt.trigger_event('click', [this.task]);
+                }
+
+                this.gantt.unselect_all();
+
+                //  add dependency by popup button
+                if(this.gantt.dependencyBar != null){
+                	this.add_dependency();
+                }else {
+                    this.group.classList.toggle('active');
+                    this.show_popup();
+                }
+
+            });
+
+            $$1.on(this.group, 'dblclick', (e) => {
+                if (this.action_completed) {
+                    // just finished a move action, wait for a few seconds
+                    return;
+                }
+
                 this.gantt.trigger_event('click', [this.task]);
-            }
+            });
+        }
 
-            this.show_popup();
-            this.gantt.unselect_all();
-            this.group.classList.add('active');
-        });
+        add_dependency(){
+    		// already marked a dependency
+    		var markedTask = this.gantt.dependencyBar.task;
+    		if(markedTask == null)
+    			return;
 
-        $$1.on(this.group, 'dblclick', (e) => {
-            if (this.action_completed) {
-                // just finished a move action, wait for a few seconds
-                return;
-            }
+    		var changedTask;
 
-            this.gantt.trigger_event('click', [this.task]);
-        });
-    }
+    		// check if tasks are already connected
+    		if(!this.task.dependencies.includes(markedTask.id) && !markedTask.dependencies.includes(this.task.id) && this.task !== markedTask){
+    			// same start date no dependency
+    			if(this.task._start.getTime() === markedTask._start.getTime()){
+    	    		this.release_marked_bar();
+    				return;
+    			}
 
-    add_dependency(){
-		// already marked a dependency
-		var markedTask = this.gantt.dependencyBar.task;
-		if(markedTask == null)
-			return;
+    			// check which task starts later
+    			if(this.task._start.getTime() > markedTask._start.getTime()){
+    				changedTask = this.task;
+    				this.task.dependencies.push(markedTask.id);
+    			}else {
+    				changedTask = markedTask;
+    				markedTask.dependencies.push(this.task.id);
+    			}
 
-		var changedTask;
+    			// fire dependencyAdded event
+    			this.gantt.trigger_event('dependency_added', [changedTask]);
+    	      	// recalculate dependency tree
+    			this.gantt.setup_dependencies();
+    			// redraw gantt
+    			this.gantt.render();
+    		}
+    		this.release_marked_bar();
+        }
 
-		// check if tasks are already connected
-		if(!this.task.dependencies.includes(markedTask.id) && !markedTask.dependencies.includes(this.task.id) && this.task !== markedTask){
-			// same start date no dependency
-			if(this.task._start.getTime() === markedTask._start.getTime()){
-	    		this.release_marked_bar();
-				return;
-			}
-
-			// check which task starts later
-			if(this.task._start.getTime() > markedTask._start.getTime()){
-				changedTask = this.task;
-				this.task.dependencies.push(markedTask.id);
-			}else{
-				changedTask = markedTask;
-				markedTask.dependencies.push(this.task.id);
-			}
-
-			// fire dependencyAdded event
-			this.gantt.trigger_event('dependency_added', [changedTask]);
-	      	// recalculate dependency tree
-			this.gantt.setup_dependencies();
-			// redraw gantt
-			this.gantt.render();
-		}
-		this.release_marked_bar();
-    }
-
-    release_marked_bar(){
-    	// remove class
-    	this.gantt.dependencyBar.group.classList.toggle('addArrow');
-    	// empty gantt variable
-    	this.gantt.dependencyBar = null;
-    }
-
+        release_marked_bar(){
+        	// remove class
+        	this.gantt.dependencyBar.group.classList.toggle('addArrow');
+        	// empty gantt variable
+        	this.gantt.dependencyBar = null;
+        }
 
         show_popup() {
             if (this.gantt.bar_being_dragged) return;
+
             //  add localization to popup
-        const start_date = date_utils.format(this.task._start, 'MMM D', this.gantt.options.language);
-        const end_date = date_utils.format(
-            date_utils.add(this.task._end, -1, 'second'),
-            'MMM D',
-            this.gantt.options.language
-        );
-        const subtitle = start_date + ' - ' + end_date;
+            const start_date = date_utils.format(
+                this.task._start,
+                'MMM D',
+                this.gantt.options.language
+            );
+            const end_date = date_utils.format(
+                date_utils.add(this.task._end, -1, 'second'),
+                'MMM D',
+                this.gantt.options.language
+            );
+            const subtitle = start_date + ' - ' + end_date;
 
             this.gantt.show_popup({
                 target_element: this.$bar,
@@ -879,15 +918,15 @@ $$1.attr = (element, attr, value) => {
             const bar = this.$bar,
                 label = this.group.querySelector('.bar-label');
 
-        if (this.gantt.options.fixed_label_location ||
-		label.getBBox().width > bar.getWidth()) {
-            label.classList.add('big');
-            label.setAttribute('x', bar.getX() + bar.getWidth() + 5);
-        } else {
-            label.classList.remove('big');
-            label.setAttribute('x', bar.getX() + bar.getWidth() / 2);
+            if (this.gantt.options.fixed_label_location ||
+    		label.getBBox().width > bar.getWidth()) {
+                label.classList.add('big');
+                label.setAttribute('x', bar.getX() + bar.getWidth() + 5);
+            } else {
+                label.classList.remove('big');
+                label.setAttribute('x', bar.getX() + bar.getWidth() / 2);
+            }
         }
-    }
 
         update_handle_position() {
             const bar = this.$bar;
@@ -910,22 +949,22 @@ $$1.attr = (element, attr, value) => {
         }
     }
 
-class Arrow {
-    constructor(gantt, from_task, to_task) {
-    	this.gantt = gantt;
-        this.from_task = from_task;
-        this.to_task = to_task;
+    class Arrow {
+        constructor(gantt, from_task, to_task) {
+        	this.gantt = gantt;
+            this.from_task = from_task;
+            this.to_task = to_task;
 
-        this.calculate_path();
-        this.draw();
-        //  add event handling for Arrows
-        if(this.gantt.options.enable_dependency_edit)
-        	this.setup_eventListener();
-    }
-
-    calculate_path() {
-        let start_x =
-            this.from_task.$bar.getX() + this.from_task.$bar.getWidth() / 2;
+            this.calculate_path();
+            this.draw();
+            //  add event handling for Arrows
+            if(this.gantt.options.enable_dependency_edit)
+            	this.setup_eventListener();
+        }
+        
+        calculate_path() {
+            let start_x =
+                this.from_task.$bar.getX() + this.from_task.$bar.getWidth() / 2;
 
             const condition = () =>
                 this.to_task.$bar.getX() < start_x + this.gantt.options.padding &&
@@ -991,50 +1030,50 @@ class Arrow {
                 m -5 -5
                 l 5 5
                 l -5 5`;
+            }
+        }
+        
+        draw() {
+            this.element = createSVG('path', {
+                d: this.path,
+                'data-from': this.from_task.task.id,
+                'data-to': this.to_task.task.id,
+            });
+        }
+
+        update() {
+            this.calculate_path();
+            this.element.setAttribute('d', this.path);
+        }
+        
+        //  add event handling for Arrows
+        setup_eventListener(){
+            $.on(this.element, 'click', e => {
+            	//  remove Arrow element, and delete dependency from task
+            	var index = this.to_task.task.dependencies.indexOf(this.from_task.task.id);
+            	this.to_task.task.dependencies.splice(index, 1);
+            	this.element.remove();
+            	this.gantt.setup_dependencies();
+    			// fire dependencyAdded event
+    			this.gantt.trigger_event('dependency_removed', [this.to_task.task]);
+    		});
+            $.on(this.element, 'mouseenter', e => {
+            	this.element.classList.add('hover');
+    		});
+            $.on(this.element, 'mouseleave', e => {
+    			this.element.classList.remove('hover');
+    		});
         }
     }
 
-    draw() {
-        this.element = createSVG('path', {
-            d: this.path,
-            'data-from': this.from_task.task.id,
-            'data-to': this.to_task.task.id
-        });
-    }
-
-    update() {
-        this.calculate_path();
-        this.element.setAttribute('d', this.path);
-    }
-
-    //  add event handling for Arrows
-    setup_eventListener(){
-        $.on(this.element, 'click', e => {
-        	//  remove Arrow element, and delete dependency from task
-        	var index = this.to_task.task.dependencies.indexOf(this.from_task.task.id);
-        	this.to_task.task.dependencies.splice(index, 1);
-        	this.element.remove();
-        	this.gantt.setup_dependencies();
-			// fire dependencyAdded event
-			this.gantt.trigger_event('dependency_removed', [this.to_task.task]);
-		});
-        $.on(this.element, 'mouseenter', e => {
-        	this.element.classList.add('hover');
-		});
-        $.on(this.element, 'mouseleave', e => {
-			this.element.classList.remove('hover');
-		});
-    }
-}
-
-class Popup {
-    constructor(parent, custom_html, gantt) {
-        this.parent = parent;
-        this.custom_html = custom_html;
-        //  add gantt for dependency action
-        this.gantt = gantt;
-        this.make();
-    }
+    class Popup {
+        constructor(parent, custom_html, gantt) {
+            this.parent = parent;
+            this.custom_html = custom_html;
+            //  add gantt for dependency action
+            this.gantt = gantt;
+            this.make();
+        }
 
         make() {
             this.parent.innerHTML = `
@@ -1046,12 +1085,12 @@ class Popup {
 
             this.hide();
 
-        this.title = this.parent.querySelector('.title');
-        this.subtitle = this.parent.querySelector('.subtitle');
-        //  add action to popup
-        this.action = this.parent.querySelector('.action');
-        this.pointer = this.parent.querySelector('.pointer');
-    }
+            this.title = this.parent.querySelector('.title');
+            this.subtitle = this.parent.querySelector('.subtitle');
+            //  add action to popup
+            this.action = this.parent.querySelector('.action');
+            this.pointer = this.parent.querySelector('.pointer');
+        }
 
         show(options) {
             if (!options.target_element) {
@@ -1062,63 +1101,72 @@ class Popup {
             }
             const target_element = options.target_element;
 
-        if (this.custom_html) {
-            let html = this.custom_html(options.task);
-            html += '<div class="pointer"></div>';
-            this.parent.innerHTML = html;
-            this.pointer = this.parent.querySelector('.pointer');
-        } else {
-            // set data
-            this.title.innerHTML = options.title;
-            this.subtitle.innerHTML = options.subtitle;
-            //  add action to popup
-            if(this.gantt.options.enable_dependency_edit){
-                // TODO make text dynamic
-                this.action.innerHTML = 'add dependency';
+            if (this.custom_html) {
+                let html = this.custom_html(options.task);
+                html += '<div class="pointer"></div>';
+                this.parent.innerHTML = html;
+                this.pointer = this.parent.querySelector('.pointer');
+            } else {
+                // set data
+                this.title.innerHTML = options.title;
+                this.subtitle.innerHTML = options.subtitle;
+                //  add action to popup
+                if(this.gantt.options.enable_dependency_edit){
+                    // TODO make text dynamic
+                    this.action.innerHTML = 'add dependency';
+                    
+                    var popup = this;
+                    this.action.onclick = function() {
+                    	var bar = popup.gantt.get_bar(options.task.id);
+                    	bar.group.classList.toggle('addArrow');
+                		
+                    	popup.gantt.dependencyBar = bar;
+                    	popup.hide();
+                    	};
+                }else {
+                	this.action.remove();
+                }
 
-                var popup = this;
-                this.action.onclick = function() {
-                	var bar = popup.gantt.get_bar(options.task.id);
-                	bar.group.classList.toggle('addArrow');
-
-                	popup.gantt.dependencyBar = bar;
-                	popup.hide();
-                	};
-            }else{
-            	this.action.remove();
             }
 
-        }
+        	//  fix popup overlaying bars
+        	this.parent.style.display = 'block';
 
-    	//  fix popup overlaying bars
-    	this.parent.style.display = 'block';
-
-    	// set position
-        let position_meta;
-        if (target_element instanceof HTMLElement) {
-            position_meta = target_element.getBoundingClientRect();
-        } else if (target_element instanceof SVGElement) {
-            position_meta = options.target_element.getBBox();
-        }
+        	// set position
+            let position_meta;
+            if (target_element instanceof HTMLElement) {
+                position_meta = target_element.getBoundingClientRect();
+            } else if (target_element instanceof SVGElement) {
+                position_meta = options.target_element.getBBox();
+            }
 
             if (options.position === 'left') {
                 this.parent.style.left =
                     position_meta.x + (position_meta.width + 10) + 'px';
                 this.parent.style.top = position_meta.y + 'px';
 
-            this.pointer.style.transform = 'rotateZ(90deg)';
-            this.pointer.style.left = '-7px';
-            this.pointer.style.top = '2px';
+                this.pointer.style.transform = 'rotateZ(90deg)';
+                this.pointer.style.left = '-7px';
+                this.pointer.style.top = '2px';
+            }
         }
-            // show
-            this.parent.style.opacity = 1;
+
+        hide() {
+        	//  fix popup overlaying bars
+        	this.parent.style.display = 'none';
+            this.parent.style.left = 0;
+        }
     }
 
-    hide() {
-        this.parent.style.opacity = 0;
-        this.parent.style.left = 0;
-    }
-}
+    const VIEW_MODE = {
+        QUARTER_DAY: 'Quarter Day',
+        HALF_DAY: 'Half Day',
+        HOUR: 'Hour',
+        DAY: 'Day',
+        WEEK: 'Week',
+        MONTH: 'Month',
+        YEAR: 'Year',
+    };
 
     class Gantt {
         constructor(wrapper, tasks, options) {
@@ -1195,8 +1243,8 @@ class Popup {
                 fixed_label_location: false,
                 language: 'en',
                 enable_drag_edit : true,
-                enable_slide_edit : true,
-                enable_progress_edit : true
+            	enable_slide_edit : true,
+            	enable_progress_edit : true
             };
             this.options = Object.assign({}, default_options, options);
         }
@@ -1430,11 +1478,11 @@ class Popup {
                 append_to: this.layers.grid,
             });
 
-        $$1.attr(this.$svg, {
-            height: grid_height + this.options.padding + 100,
-            width: '100%'
-        });
-    }
+            $$1.attr(this.$svg, {
+                height: grid_height + this.options.padding + 100,
+                width: '100%',
+            });
+        }
 
         make_grid_rows() {
             const rows_layer = createSVG('g', { append_to: this.layers.grid });
@@ -1593,67 +1641,71 @@ class Popup {
             return dates;
         }
 
-    get_date_info(date, last_date, i) {
-        if (!last_date) {
-            last_date = date_utils.add(date, 1, 'year');
-        }
-        const date_text = {
-            Hour_lower: date_utils.format(
-                date,
-                'HH',
-                this.options.language
-            ),
-            'Quarter Day_lower': date_utils.format(
-                date,
-                'HH',
-                this.options.language
-            ),
-            'Half Day_lower': date_utils.format(
-                date,
-                'HH',
-                this.options.language
-            ),
-            Day_lower:
-                date.getDate() !== last_date.getDate()
-                    ? date_utils.format(date, 'D', this.options.language)
-                    : '',
-            Week_lower:
-                date.getMonth() !== last_date.getMonth()
-                    ? date_utils.format(date, 'D MMM', this.options.language)
-                    : date_utils.format(date, 'D', this.options.language),
-            Month_lower: date_utils.format(date, 'MMMM', this.options.language),
-            Year_lower: date_utils.format(date, 'YYYY', this.options.language),
-            Hour_upper:
-                date.getDate() !== last_date.getDate()
-                    ? date_utils.format(date, 'D MMM', this.options.language)
-                    : '',
-            'Quarter Day_upper':
-                date.getDate() !== last_date.getDate()
-                    ? date_utils.format(date, 'D MMM', this.options.language)
-                    : '',
-            'Half Day_upper':
-                date.getDate() !== last_date.getDate()
-                    ? date.getMonth() !== last_date.getMonth()
-                      ? date_utils.format(date, 'D MMM', this.options.language)
-                      : date_utils.format(date, 'D', this.options.language)
-                    : '',
-            Day_upper:
-                date.getMonth() !== last_date.getMonth()
-                    ? date_utils.format(date, 'MMMM', this.options.language)
-                    : '',
-            Week_upper:
-                date.getMonth() !== last_date.getMonth()
-                    ? date_utils.format(date, 'MMMM', this.options.language)
-                    : '',
-            Month_upper:
-                date.getFullYear() !== last_date.getFullYear()
-                    ? date_utils.format(date, 'YYYY', this.options.language)
-                    : '',
-            Year_upper:
-                date.getFullYear() !== last_date.getFullYear()
-                    ? date_utils.format(date, 'YYYY', this.options.language)
-                    : ''
-        };
+        get_date_info(date, last_date, i) {
+            if (!last_date) {
+                last_date = date_utils.add(date, 1, 'year');
+            }
+            const date_text = {
+                Hour_lower: date_utils.format(
+                    date,
+                    'HH',
+                    this.options.language
+                ),
+                'Quarter Day_lower': date_utils.format(
+                    date,
+                    'HH',
+                    this.options.language
+                ),
+                'Half Day_lower': date_utils.format(
+                    date,
+                    'HH',
+                    this.options.language
+                ),
+                Day_lower:
+                    date.getDate() !== last_date.getDate()
+                        ? date_utils.format(date, 'D', this.options.language)
+                        : '',
+                Week_lower:
+                    date.getMonth() !== last_date.getMonth()
+                        ? date_utils.format(date, 'D MMM', this.options.language)
+                        : date_utils.format(date, 'D', this.options.language),
+                Month_lower: date_utils.format(date, 'MMMM', this.options.language),
+                Year_lower: date_utils.format(date, 'YYYY', this.options.language),
+                Hour_upper:
+                    date.getDate() !== last_date.getDate()
+                        ? date_utils.format(date, 'D MMM', this.options.language)
+                        : '',
+                'Quarter Day_upper':
+                    date.getDate() !== last_date.getDate()
+                        ? date_utils.format(date, 'D MMM', this.options.language)
+                        : '',
+                'Half Day_upper':
+                    date.getDate() !== last_date.getDate()
+                        ? date.getMonth() !== last_date.getMonth()
+                            ? date_utils.format(
+                                  date,
+                                  'D MMM',
+                                  this.options.language
+                              )
+                            : date_utils.format(date, 'D', this.options.language)
+                        : '',
+                Day_upper:
+                    date.getMonth() !== last_date.getMonth()
+                        ? date_utils.format(date, 'MMMM', this.options.language)
+                        : '',
+                Week_upper:
+                    date.getMonth() !== last_date.getMonth()
+                        ? date_utils.format(date, 'MMMM', this.options.language)
+                        : '',
+                Month_upper:
+                    date.getFullYear() !== last_date.getFullYear()
+                        ? date_utils.format(date, 'YYYY', this.options.language)
+                        : '',
+                Year_upper:
+                    date.getFullYear() !== last_date.getFullYear()
+                        ? date_utils.format(date, 'YYYY', this.options.language)
+                        : '',
+            };
 
             const base_pos = {
                 x: i * this.options.column_width,
@@ -1661,22 +1713,22 @@ class Popup {
                 upper_y: this.options.header_height - 25,
             };
 
-        const x_pos = {
-            Hour_lower: (this.options.column_width * 24) / 2,
-            Hour_upper: 0,
-            'Quarter Day_lower': (this.options.column_width * 4) / 2,
-            'Quarter Day_upper': 0,
-            'Half Day_lower': (this.options.column_width * 2) / 2,
-            'Half Day_upper': 0,
-            Day_lower: this.options.column_width / 2,
-            Day_upper: (this.options.column_width * 30) / 2,
-            Week_lower: 0,
-            Week_upper: (this.options.column_width * 4) / 2,
-            Month_lower: this.options.column_width / 2,
-            Month_upper: (this.options.column_width * 12) / 2,
-            Year_lower: this.options.column_width / 2,
-            Year_upper: (this.options.column_width * 30) / 2
-        };
+            const x_pos = {
+                Hour_lower: this.options.column_width * 24 / 2,
+                Hour_upper: 0,
+                'Quarter Day_lower': (this.options.column_width * 4) / 2,
+                'Quarter Day_upper': 0,
+                'Half Day_lower': (this.options.column_width * 2) / 2,
+                'Half Day_upper': 0,
+                Day_lower: this.options.column_width / 2,
+                Day_upper: (this.options.column_width * 30) / 2,
+                Week_lower: 0,
+                Week_upper: (this.options.column_width * 4) / 2,
+                Month_lower: this.options.column_width / 2,
+                Month_upper: (this.options.column_width * 12) / 2,
+                Year_lower: this.options.column_width / 2,
+                Year_upper: (this.options.column_width * 30) / 2,
+            };
 
             return {
                 upper_text: date_text[`${this.options.view_mode}_upper`],
@@ -1756,21 +1808,21 @@ class Popup {
             parent_element.scrollLeft = scroll_pos;
         }
 
-    bind_grid_click() {
-        $$1.on(
-            this.$svg,
-            this.options.popup_trigger,
-            '.grid-row, .grid-header',
-            () => {
-            	if(this.dependencyBar != null){
-            		this.dependencyBar.group.classList.toggle('addArrow');
-            		this.dependencyBar = null;
-            	}
-                this.unselect_all();
-                this.hide_popup();
-            }
-        );
-    }
+        bind_grid_click() {
+            $$1.on(
+                this.$svg,
+                this.options.popup_trigger,
+                '.grid-row, .grid-header',
+                () => {
+                	if(this.dependencyBar != null){
+                		this.dependencyBar.group.classList.toggle('addArrow');
+                		this.dependencyBar = null;
+                	}
+                    this.unselect_all();
+                    this.hide_popup();
+                }
+            );
+        }
 
         bind_bar_events() {
             let is_dragging = false;
@@ -1786,23 +1838,23 @@ class Popup {
                 return is_dragging || is_resizing_left || is_resizing_right;
             }
 
-        $$1.on(this.$svg, 'mousedown', '.bar-wrapper, .handle', (e, element) => {
-            const bar_wrapper = $$1.closest('.bar-wrapper', element);
+            $$1.on(this.$svg, 'mousedown', '.bar-wrapper, .handle', (e, element) => {
+                const bar_wrapper = $$1.closest('.bar-wrapper', element);
 
-            // SJ make changing and dragging todos optional
-            if (element.classList.contains('left') && this.options.enable_slide_edit) {
-                is_resizing_left = true;
-            } else if (element.classList.contains('right') && this.options.enable_slide_edit) {
-                is_resizing_right = true;
-            } else if (element.classList.contains('bar-wrapper') && this.options.enable_drag_edit) {
-                is_dragging = true;
-            }
+                // SJ make changing and dragging todos optional
+                if (element.classList.contains('left') && this.options.enable_slide_edit) {
+                    is_resizing_left = true;
+                } else if (element.classList.contains('right') && this.options.enable_slide_edit) {
+                    is_resizing_right = true;
+                } else if (element.classList.contains('bar-wrapper') && this.options.enable_drag_edit) {
+                    is_dragging = true;
+                }
 
-            bar_wrapper.classList.add('active');
+                bar_wrapper.classList.add('active');
 
-            // SJ use clientX and Y offset doesn't work properly in firefox
-            x_on_start = e.offsetX;
-            y_on_start = e.offsetY;
+                // SJ use clientX and Y offset doesn't work properly in firefox
+                x_on_start = e.offsetX;
+                y_on_start = e.offsetY;
 
                 parent_bar_id = bar_wrapper.getAttribute('data-id');
                 const ids = [
@@ -1822,11 +1874,10 @@ class Popup {
                 });
             });
 
-        $$1.on(this.$svg, 'mousemove', e => {
-            if (!action_in_progress()) return;
-            // SJ use clientX and Y offset doesn't work properly in firefox
-            const dx = e.offsetX - x_on_start;
-            e.offsetY - y_on_start;
+            $$1.on(this.$svg, 'mousemove', (e) => {
+                if (!action_in_progress()) return;
+                const dx = e.offsetX - x_on_start;
+                e.offsetY - y_on_start;
 
                 bars.forEach((bar) => {
                     const $bar = bar.$bar;
@@ -1865,23 +1916,23 @@ class Popup {
                 is_resizing_right = false;
             });
 
-        $$1.on(this.$svg, 'mouseup', (e) => {
-            this.bar_being_dragged = null;
-            bars.forEach((bar) => {
-                const $bar = bar.$bar;
-                if (!$bar.finaldx) return;
-                // SJ reset value, otherwise event fires multiple times
-                $bar.finaldx = 0;
-                bar.date_changed();
-                bar.set_action_completed();
+            $$1.on(this.$svg, 'mouseup', (e) => {
+                this.bar_being_dragged = null;
+                bars.forEach((bar) => {
+                    const $bar = bar.$bar;
+                    if (!$bar.finaldx) return;
+                    // SJ reset value, otherwise event fires multiple times
+                    $bar.finaldx = 0;
+                    bar.date_changed();
+                    bar.set_action_completed();
+                });
             });
-        });
 
-        // SJ make changing progress optional
-        if(this.options.enable_progress_edit){
-        	this.bind_bar_progress();
+            // SJ make changing progress optional
+            if(this.options.enable_progress_edit){
+            	this.bind_bar_progress();
+            }
         }
-    }
 
         bind_bar_progress() {
             let x_on_start = 0;
@@ -1891,15 +1942,15 @@ class Popup {
             let $bar_progress = null;
             let $bar = null;
 
-        $$1.on(this.$svg, 'mousedown', '.handle.progress', (e, handle) => {
-            is_resizing = true;
-            // SJ use clientX and Y offset doesn't work properly in firefox
-            x_on_start = e.offsetX;
-            y_on_start = e.offsetY;
+            $$1.on(this.$svg, 'mousedown', '.handle.progress', (e, handle) => {
+                is_resizing = true;
+                // SJ use clientX and Y offset doesn't work properly in firefox
+                x_on_start = e.clientX;
+                y_on_start = e.clientY;
 
-            const $bar_wrapper = $$1.closest('.bar-wrapper', handle);
-            const id = $bar_wrapper.getAttribute('data-id');
-            bar = this.get_bar(id);
+                const $bar_wrapper = $$1.closest('.bar-wrapper', handle);
+                const id = $bar_wrapper.getAttribute('data-id');
+                bar = this.get_bar(id);
 
                 $bar_progress = bar.$bar_progress;
                 $bar = bar.$bar;
@@ -1910,10 +1961,11 @@ class Popup {
                 $bar_progress.max_dx = $bar.getWidth() - $bar_progress.getWidth();
             });
 
-        $$1.on(this.$svg, 'mousemove', (e) => {
-            if (!is_resizing) return;
-            let dx = e.offsetX - x_on_start;
-            e.offsetY - y_on_start;
+            $$1.on(this.$svg, 'mousemove', (e) => {
+                if (!is_resizing) return;
+                // SJ use clientX and Y offset doesn't work properly in firefox
+                let dx = e.clientX - x_on_start;
+                e.clientY - y_on_start;
 
                 if (dx > $bar_progress.max_dx) {
                     dx = $bar_progress.max_dx;
@@ -1922,23 +1974,23 @@ class Popup {
                     dx = $bar_progress.min_dx;
                 }
 
-            const $handle = bar.$handle_progress;
-            $$1.attr($bar_progress, 'width', $bar_progress.owidth + dx);
-            $$1.attr($handle, 'points', bar.get_progress_polygon_points());
-            $bar_progress.finaldx = dx;
-        });
+                const $handle = bar.$handle_progress;
+                $$1.attr($bar_progress, 'width', $bar_progress.owidth + dx);
+                $$1.attr($handle, 'points', bar.get_progress_polygon_points());
+                $bar_progress.finaldx = dx;
+            });
 
-        $$1.on(this.$svg, 'mouseup', () => {
-            is_resizing = false;
-            if (!($bar_progress && $bar_progress.finaldx)) return;
-            console.log("changed");
+            $$1.on(this.$svg, 'mouseup', () => {
+                is_resizing = false;
+                if (!($bar_progress && $bar_progress.finaldx)) return;
+                console.log("changed");
 
-            // SJ reset value, otherwise event fires multiple times
-            $bar_progress.finaldx = 0;
-            bar.progress_changed();
-            bar.set_action_completed();
-        });
-    }
+                // SJ reset value, otherwise event fires multiple times
+                $bar_progress.finaldx = 0;
+                bar.progress_changed();
+                bar.set_action_completed();
+            });
+        }
 
         get_all_dependent_tasks(task_id) {
             let out = [];
@@ -2019,18 +2071,18 @@ class Popup {
             });
         }
 
-    show_popup(options) {
-		if(!this.options.disable_popup){
-            if (!this.popup) {
-                this.popup = new Popup(
-                    this.popup_wrapper,
-                    this.options.custom_popup_html,
-                    this
-                );
-            }
-            this.popup.show(options);
-		}
-    }
+        show_popup(options) {
+    		if(!this.options.disable_popup){
+                if (!this.popup) {
+                    this.popup = new Popup(
+                        this.popup_wrapper,
+                        this.options.custom_popup_html,
+                        this
+                    );
+                }
+                this.popup.show(options);
+    		}
+        }
 
         hide_popup() {
             this.popup && this.popup.hide();
