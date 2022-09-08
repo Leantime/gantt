@@ -515,9 +515,14 @@ var Gantt = (function () {
                 this.gantt.options.column_width *
                     this.duration *
                     (this.task.progress / 100) || 0;
+
             this.group = createSVG('g', {
-                class: 'bar-wrapper ' + (this.task.custom_class || ''),
+                class:
+                    'bar-wrapper ' +
+                    (this.task._group ? `${this.task._group.bar_class} ` : '') +
+                    (this.task.custom_class || ''),
                 'data-id': this.task.id,
+                'data-group-id': this.task.group_id
             });
             this.bar_group = createSVG('g', {
                 class: 'bar-group',
@@ -748,11 +753,14 @@ var Gantt = (function () {
                 'MMM D',
                 this.gantt.options.language
             );
+
             const subtitle = start_date + ' - ' + end_date;
 
             this.gantt.show_popup({
                 target_element: this.$bar,
-                title: this.task.name,
+                title:
+                    `<b>${this.task.name}</b>` +
+                    (this.task._group ? `<br>${this.task._group.name}` : ''),
                 subtitle: subtitle,
                 task: this.task,
             });
@@ -1226,6 +1234,12 @@ var Gantt = (function () {
         }
 
         setup_options(options) {
+            // convert groups array to a dictionary for faster lookups
+            options.groups = options.groups.reduce((dict, curr) => {
+                dict[curr.id] = curr;
+                return dict;
+            }, {});
+
             const default_options = {
                 header_height: 50,
                 column_width: 30,
@@ -1244,7 +1258,8 @@ var Gantt = (function () {
                 language: 'en',
                 enable_drag_edit : true,
             	enable_slide_edit : true,
-            	enable_progress_edit : true
+            	enable_progress_edit : true,
+                groups: {}
             };
             this.options = Object.assign({}, default_options, options);
         }
@@ -1306,6 +1321,14 @@ var Gantt = (function () {
                 // uids
                 if (!task.id) {
                     task.id = generate_id(task);
+                }
+
+                // task group
+                if (
+                    typeof task.group_id !== 'undefined' &&
+                    this.options.groups.hasOwnProperty(task.group_id)
+                ) {
+                    task._group = this.options.groups[task.group_id];
                 }
 
                 return task;
