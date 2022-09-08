@@ -86,5 +86,6 @@ export default class Popup {
     hide() {
     	//  fix popup overlaying bars
     	this.parent.style.display = 'none';
+        this.parent.style.left = 0;
     }
 }
