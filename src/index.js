@@ -852,6 +852,7 @@ export default class Gantt {
             $bar_progress.finaldx = 0;
             bar.progress_changed();
             bar.set_action_completed();
+            $bar_progress.finaldx = 0;
         });
     }
 
