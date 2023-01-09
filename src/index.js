@@ -471,7 +471,7 @@ export default class Gantt {
                 x: date.lower_x,
                 y: date.lower_y,
                 innerHTML: date.lower_text,
-                class: 'lower-text',
+                class: 'lower-text'+((date.isWeekendDay && this.options.view_mode == "Day")  ? " weekend":""),
                 append_to: this.layers.date,
             });
 
@@ -600,6 +600,7 @@ export default class Gantt {
             upper_y: base_pos.upper_y,
             lower_x: base_pos.x + x_pos[`${this.options.view_mode}_lower`],
             lower_y: base_pos.lower_y,
+            isWeekendDay: (date.getDay() == 0 || date.getDay() == 6),
         };
     }
 
