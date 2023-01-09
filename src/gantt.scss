@@ -137,6 +137,9 @@ $handle-color: #ddd !default;
 	.lower-text {
 		fill: $text-color;
 	}
+	.lower-text.weekend{
+		fill:#999;
+	}
 
 	.hide {
 		display: none;
